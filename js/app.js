@@ -13,13 +13,13 @@ var places = ko.observableArray([]);
 var viewModel = function(){
 	var self = this;
 	this.list = ko.observableArray([]);
-
 };
 
 
 var Place = function(locationInfo){
 	var self = this;
 	self.visible = true;
+	self.bounce = false;
 	self.lat = locationInfo.lat;
 	self.lng = locationInfo.lng;
 	self.title = locationInfo.name;
@@ -33,7 +33,14 @@ var Place = function(locationInfo){
 	});
 	
 	self.marker.addListener('click', function(){
-        toggleBounce(self);
+		if (self.marker.getAnimation() !== null) {
+			self.marker.setAnimation(null);
+		} else {
+			self.marker.setAnimation(google.maps.Animation.BOUNCE);
+			setTimeout(function () {
+				self.marker.setAnimation(null);
+			}, 1400);
+		}
     });
 	
 	self.infoWindow = new google.maps.InfoWindow({
@@ -57,14 +64,6 @@ function initialize() {
 		places.push(new Place(locations[x]));
 	}
 };
-
-function toggleBounce(place) {
-    if (place.marker.getAnimation() !== null) {
-        place.marker.setAnimation(null);
-    } else {
-        place.marker.setAnimation(google.maps.Animation.BOUNCE);
-    }
-}
 
 function googleError(){
 	alert("Google Maps failed to load.");
