@@ -20,7 +20,18 @@
 	  <nav class="light-blue lighten-1" role="navigation">
 		<div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Raleigh's Best Food</a>
 		  <ul class="right hide-on-med-and-down">
-			<li><a href="#">Navbar Link</a></li>
+			<li><a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Filter</a></a></li>
+		  </ul>
+		  <ul id='dropdown1' class='dropdown-content'>
+          <li><label class="label-icon" for="search"><i class="material-icons">search</i></label></li>
+
+        	
+			<li><a href="#!">one</a></li>
+			<li><a href="#!">two</a></li>
+			<li class="divider" tabindex="-1"></li>
+			<li><a href="#!">three</a></li>
+			<li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
+			<li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
 		  </ul>
 
 		  <ul id="nav-mobile" class="sidenav">
@@ -31,12 +42,16 @@
 	  </nav>
 
 		<div id="map"></div>
+  
   </div>
+  
+  
+  
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
   <script src="js/locations.js"></script>
   <script src="js/app.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3JmicSw92HBFX9AKPuepaXPgDKXXtXtA&callback=googleMap" async defer></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3JmicSw92HBFX9AKPuepaXPgDKXXtXtA&callback=initialize" onerror="googleError()"></script>
 </body>
 </html>
