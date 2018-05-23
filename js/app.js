@@ -1,13 +1,12 @@
-(function($){
-  $(function(){
-
-    $('.sidenav').sidenav();
-
-  }); // end of document ready
-})(jQuery); // end of jQuery name space
-
 var map; 
 var theViewModel = new viewModel();
+
+
+$(document).ready(function(){
+    $('.sidenav').sidenav();
+});
+
+
 
 function viewModel(){
 	var self = this;
@@ -22,7 +21,25 @@ function viewModel(){
 	};
 	
 	filterList = function(){
-		alert('Hi');
+		self.filter();
+		if(self.filter() == ""){
+			for(var x = 0; x < self.places().length; x++){
+				console.log(self.places()[x].title);
+				self.places()[x].showMarker();
+			}				
+		}
+		else{
+			for(var x = 0; x < self.places().length; x++){
+				console.log(self.places()[x].title);
+				self.places()[x].showMarker();
+			}	
+			for(var x = 0; x < self.places().length; x++){
+				if(!self.places()[x].title.toLowerCase().includes(self.filter().toLowerCase())){
+					console.log(self.places()[x].title);
+					self.places()[x].hideMarker();
+				}
+			}	
+		}
 	};
 	
 };

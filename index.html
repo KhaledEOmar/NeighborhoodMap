@@ -19,22 +19,30 @@
   <div id = "wrapper">
 	<div id="map"></div>
 	<ul id="slide-out" class="sidenav">
-		<li><div class="input-field col s6">
-			<input data-bind="textInput: filter" id="filterList" type="text" class="validate">
-			<label class="active" for="filterList">Filter</label>
-		</div></li>
+		<li>
+			<form id="filterForm">
+			<div class="input-field col s6">
+				<input data-bind="value: filter" id="filterInput" type="text" class="validate">
+				<label class="active" for="filterInput">Filter</label>
+
+			</div>
+			</form>
+			<button class="btn waves-effect waves-light btn-small" form="filterForm" type="submit" name="action" data-bind="click: filterList">Submit
+				<i class="material-icons right">send</i>
+			</button>
+		</li>
+		<hr>
 		<ul data-bind="foreach: places()">
 			<li>
 				<div data-bind="visible: showPlace()"><span data-bind="text: title, event: { mouseover: hoverBounce, mouseout: stopHoverBounce}"></span></div>
 			</li>
 		</ul>
+		<span data-bind="text: filter"></span>
 	</ul>
 
   
   </div>
-  
-  
-  
+    
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
