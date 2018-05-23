@@ -5,16 +5,25 @@
 
   }); // end of document ready
 })(jQuery); // end of jQuery name space
- $('.dropdown-trigger').dropdown();
+ $('.dropdown-trigger').dropdown({closeOnClick:false});
 
 var map; 
-var places = ko.observableArray([]);
+var theViewModel = new viewModel();
 
-var viewModel = function(){
+function viewModel(){
 	var self = this;
-	var list = ko.observableArray([])
-	
-	
+	self.filter = ko.observable("");
+	self.places = ko.observableArray([]);
+	hoverBounce = function(){
+		this.bounce();
+	};
+	stopHoverBounce = function(){
+		this.stopBounce();
+	};
+	hideMarker = function(){
+		this.hideMarker();
+		this.visible = false;
+	};
 };
 
 function initialize() {
@@ -24,7 +33,7 @@ function initialize() {
 		center: raleigh
 	});
 	for(var x =0; x<locations.length; x++){
-		places.push(new Place(locations[x]));
+		theViewModel.places.push(new Place(locations[x]));
 	}
 };
 
@@ -36,7 +45,7 @@ var Place = function(locationInfo){
 	self.id = locationInfo.id;
 	self.lng = locationInfo.lng;
 	self.title = locationInfo.name;
-	self.contentString = 'Hello';
+	self.visible = ko.observable(true);
 	
 	self.marker = new google.maps.Marker({
 		position: new google.maps.LatLng(self.lat, self.lng),
@@ -44,31 +53,35 @@ var Place = function(locationInfo){
 		map: map,
 		title: self.title
 	});
+
+	self.contentString = 'Hello';	
 	
 	self.infoWindow = new google.maps.InfoWindow({
 		content: self.contentString
 	});
 	
 	self.marker.addListener('click', (function(){
-		toggleBounce(self.id);
+		for(var x = 0; x < theViewModel.places().length; x++){
+			theViewModel.places()[x].marker.setAnimation(null);
+			theViewModel.places()[x].infoWindow.close();
+		}
 		self.infoWindow.open(map,self.marker);
-    }));
-
+	}));
+	
+	self.bounce = function(){
+		self.marker.setAnimation(google.maps.Animation.BOUNCE);
+	};
+	self.stopBounce = function(){
+		self.marker.setAnimation(null);
+	};
+	
+	self.hideMarker = function(){
+		self.marker.setMap(null);
+	};
 };
-
-function toggleBounce(id){
-	for(var x = 0; x < places().length; x++){
-		places()[x].marker.setAnimation(null);
-	}
-	if (places()[id].marker.getAnimation() !== null) {
-		places()[id].marker.setAnimation(null);
-	} else {
-		places()[id].marker.setAnimation(google.maps.Animation.BOUNCE);
-	}
-}
 
 function googleError(){
 	alert("Google Maps failed to load.");
 };
 
-ko.applyBindings(new viewModel());
+ko.applyBindings(theViewModel);
