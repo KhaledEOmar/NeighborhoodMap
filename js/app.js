@@ -1,4 +1,6 @@
 var map; 
+var foursquareClient = "HOKI3B31YR2E4HG1JRFUAJ5BLJLFF3VSXKUTJSPHBK0QS0J5";
+var foursquareSecret = "Y322OM11ZJCSXQYYSE0TZSPHAVL1LS4ERPGFYYEUFSYCU5P3";
 var theViewModel = new viewModel();
 
 
@@ -404,6 +406,11 @@ var Place = function(locationInfo){
 	self.lng = locationInfo.lng;
 	self.title = locationInfo.name;
 	self.showPlace = ko.observable(true);
+	self.venueID = "";
+	self.venueNumber = "";
+	self.addressOne = "";
+	self.addressTwo = "";
+
 	
 	self.marker = new google.maps.Marker({
 		position: new google.maps.LatLng(self.lat, self.lng),
@@ -411,9 +418,20 @@ var Place = function(locationInfo){
 		map: map,
 		title: self.title
 	});
-
-	self.contentString = 'Hello';	
 	
+	self.foursquareURL = "https://api.foursquare.com/v2/venues/search?ll=" + self.lat + "," + self.lng + "&client_id=" + foursquareClient + "&client_secret=" + foursquareSecret + "&query=" + self.title + "&v=20180523";
+	
+	$.getJSON(self.foursquareURL, function(data){
+		var place = data.response.venues[0];
+			self.venueID = place.id;
+			self.venueNumber = place.contact.formattedPhone;
+			self.addressOne = place.location.formattedAddress[0];
+			self.addressTwo = place.location.formattedAddress[1];
+	}).fail(function(){
+		alert("Foursquare API Error");
+	});
+
+
 	self.infoWindow = new google.maps.InfoWindow({
 		content: self.contentString
 	});
@@ -423,6 +441,8 @@ var Place = function(locationInfo){
 			theViewModel.places()[x].marker.setAnimation(null);
 			theViewModel.places()[x].infoWindow.close();
 		}
+		self.contentString = self.venueNumber + self.addressOne + self.addressTwo;
+        self.infoWindow.setContent(self.contentString);
 		self.infoWindow.open(map,self.marker);
 		self.bounce();
 	}));
