@@ -18,10 +18,10 @@
   
   <div id = "wrapper">
 	<div id="map"></div>
-	<ul id="slide-out" class="sidenav sidenav-fixed">
+	<ul id="slide-out" class="sidenav">
 		<li><div class="input-field col s6">
-			<input data-bind="value: filter" id="first_name2" type="text" class="validate">
-			<label class="active" for="first_name2">Filter</label>
+			<input data-bind="value: filter" id="filterList" type="text" class="validate">
+			<label class="active" for="filterList">Filter</label>
 		</div></li>
 		<ul data-bind="foreach: places()">
 			<li>
@@ -29,7 +29,6 @@
 			</li>
 		</ul>
 	</ul>
-    <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
   
   </div>
