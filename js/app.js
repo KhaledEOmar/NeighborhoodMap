@@ -13,16 +13,18 @@ function viewModel(){
 	var self = this;
 	self.filter = ko.observable("");
 	self.places = ko.observableArray([]);
+	
 	hoverBounce = function(){
 		this.bounce();
 	};
 	stopHoverBounce = function(){
 		this.stopBounce();
 	};
-	hideMarker = function(){
-		this.hideMarker();
-		this.visible = false;
+	
+	filterList = function(){
+		alert('Hi');
 	};
+	
 };
 
 function initialize() {
@@ -379,13 +381,12 @@ function CenterControl(controlDiv, map) {
 
 var Place = function(locationInfo){
 	var self = this;
-	self.visible = true;
 	self.bounce = false;
 	self.lat = locationInfo.lat;
 	self.id = locationInfo.id;
 	self.lng = locationInfo.lng;
 	self.title = locationInfo.name;
-	self.visible = ko.observable(true);
+	self.showPlace = ko.observable(true);
 	
 	self.marker = new google.maps.Marker({
 		position: new google.maps.LatLng(self.lat, self.lng),
@@ -418,6 +419,11 @@ var Place = function(locationInfo){
 	
 	self.hideMarker = function(){
 		self.marker.setMap(null);
+		self.showPlace(false);
+	};
+	self.showMarker = function(){
+		self.marker.setMap(map);
+		self.showPlace(true);
 	};
 };
 

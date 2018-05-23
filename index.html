@@ -20,12 +20,12 @@
 	<div id="map"></div>
 	<ul id="slide-out" class="sidenav">
 		<li><div class="input-field col s6">
-			<input data-bind="value: filter" id="filterList" type="text" class="validate">
+			<input data-bind="textInput: filter" id="filterList" type="text" class="validate">
 			<label class="active" for="filterList">Filter</label>
 		</div></li>
 		<ul data-bind="foreach: places()">
 			<li>
-				<span data-bind="text: title, event: { mouseover: hoverBounce, mouseout: stopHoverBounce, click: hideMarker}"></span>
+				<div data-bind="visible: showPlace()"><span data-bind="text: title, event: { mouseover: hoverBounce, mouseout: stopHoverBounce}"></span></div>
 			</li>
 		</ul>
 	</ul>
