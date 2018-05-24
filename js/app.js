@@ -441,7 +441,7 @@ var Place = function(locationInfo){
 			theViewModel.places()[x].marker.setAnimation(null);
 			theViewModel.places()[x].infoWindow.close();
 		}
-		self.contentString = self.venueNumber + self.addressOne + self.addressTwo;
+		self.contentString = '<div id="infowindow"> <h3>' + self.title + '</h3> <p>Phone Number:' + self.venueNumber + '</p><p> Address:' + self.addressOne + '<br/>'+ self.addressTwo + '</p></div>';
         self.infoWindow.setContent(self.contentString);
 		self.infoWindow.open(map,self.marker);
 		self.bounce();
