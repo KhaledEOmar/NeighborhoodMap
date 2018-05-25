@@ -34,7 +34,7 @@
 		<hr>
 		<ul data-bind="foreach: places()">
 			<li>
-				<div data-bind="visible: showPlace()"><span data-bind="text: title, event: { mouseover: hoverBounce, mouseout: stopHoverBounce}"></span></div>
+				<div data-bind="visible: showPlace()"><span data-bind="text: title, event: { mouseover: hoverBounce, mouseout: stopHoverBounce, click: openWindow}"></span></div>
 			</li>
 		</ul>
 	</ul>

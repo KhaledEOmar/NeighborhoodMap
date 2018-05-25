@@ -21,6 +21,10 @@ function viewModel(){
 	stopHoverBounce = function(){
 		this.stopBounce();
 	};
+	openWindow = function(){
+		this.showWindow();
+	};
+
 	
 	filterList = function(){
 		self.filter();
@@ -453,7 +457,16 @@ var Place = function(locationInfo){
 	self.stopBounce = function(){
 		self.marker.setAnimation(null);
 	};
-	
+	self.showWindow = function(){
+		for(var x = 0; x < theViewModel.places().length; x++){
+			theViewModel.places()[x].marker.setAnimation(null);
+			theViewModel.places()[x].infoWindow.close();
+		}
+		self.contentString = '<div id="infowindow"> <h3>' + self.title + '</h3> <p>Phone Number:' + self.venueNumber + '</p><p> Address:' + self.addressOne + '<br/>'+ self.addressTwo + '</p></div>';
+        self.infoWindow.setContent(self.contentString);
+		self.infoWindow.open(map,self.marker);
+		self.bounce();
+	}
 	self.hideMarker = function(){
 		self.marker.setMap(null);
 		self.showPlace(false);
